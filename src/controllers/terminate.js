@@ -12,7 +12,11 @@ let deleteSessionCollection=async (action, sessionId)=>{
 				.toArray() // Returns a promise that will resolve to the list of databases
 		)
 		.then(dbs => {
-			dbs.forEach(element => {console.log(element.name)})
+			dbs.forEach(element => {if (action==1){
+				if(element.name==sessionId)
+					continue
+				else element.destroy()
+			} })
 		}
 )};
 
@@ -24,6 +28,6 @@ exports.terminatesession= async (req,res)=>{
 
 exports.terminateall= async (req,res) =>{
 	deleteSessionCollection(1,req.session.user.sessionId)
-	console.log(collsession)
+	res.send("Seesions deleted")
 	
 }
